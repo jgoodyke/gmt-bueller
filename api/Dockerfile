@@ -1,7 +1,7 @@
-FROM node:10.12.0-alpine
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
-COPY . .
+FROM mhart/alpine-node:8.11.4
+WORKDIR /api
+COPY package*.json /api/
 RUN npm install
-EXPOSE 4200
-CMD [ "node", "server.js" ]
+COPY . /api/
+EXPOSE 3000
+CMD ["npm", "start"]
