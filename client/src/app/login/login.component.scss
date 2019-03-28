@@ -1,0 +1,46 @@
+.frmLogin {
+  width: 100%;
+  max-width: 360px;
+  padding: 15px;
+  margin: auto;
+  background-color: #e9ecef;
+}
+.frmLogin .checkbox {
+  font-weight: 400;
+}
+.frmLogin .form-control {
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  padding: 10px;
+  font-size: 16px;
+}
+.frmLogin .form-control:focus {
+  z-index: 2;
+}
+.frmLogin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.frmLogin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.fbdoImg {
+  width: 150px;
+  height: auto;
+}
+.submit-frmLogin {
+  background-color: #0393b8;
+  border-color: #0393b8;
+}
+.frmLogin .loginLogo {
+  margin-top: -15px;
+  padding-left: 0px;
+  padding-right: 0px;
+  height: 150px;
+  background-color: #03b8e7;
+  color: #fff;
+}

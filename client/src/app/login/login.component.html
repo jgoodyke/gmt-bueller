@@ -1,0 +1,31 @@
+<form class="frmLogin" [formGroup]="frmLogin" (ngSubmit)="login()">
+  <div class="row loginLogo">
+    <div class="col-6"><img class="fbdoImg" src="../../assets/img/fbdo-2-big-transparent.png"></div>
+    <div class="col-6 p-1 text-center"><h2>...Bueller</h2><h2>...Bueller</h2><h2>...Bueller</h2></div>
+  </div>
+  
+  <div class="form-group mt-3">
+    <label for="username" class="sr-only">Username</label>
+    <input formControlName="username" type="text" name="username" class="form-control" placeholder="Username" autofocus>
+    <div *ngIf="submitted && fc.username.errors" class="alert alert-danger mt-2">
+      <div *ngIf="fc.username.errors.required">Username is required</div>
+    </div>
+    <!-- <div *ngIf="submitted && fc.username.errors">
+        <div *ngIf="fc.username.errors.required">Username is required</div>
+    </div> -->
+  </div>
+  <div class="form-group">
+    <label for="password" class="sr-only">Password</label>
+    <input formControlName="password" type="password" name="password" class="form-control" placeholder="Password">
+    <div *ngIf="submitted && fc.password.errors" class="alert alert-danger mt-2">
+      <div *ngIf="fc.password.errors.required">Password is required</div>
+    </div>
+    <!-- <div *ngIf="submitted && fc.password.errors">
+        <div *ngIf="fc.password.errors.required">Password is required</div>
+    </div> -->
+  </div>
+  <div class="form-group">
+      <button class="btn btn-lg btn-primary btn-block submit-frmLogin" type="submit" [disabled]="loading">Sign in</button>
+      <div [hidden]="!error" class="alert alert-danger mt-2">{{ errorMsg }}</div>
+  </div>
+</form>

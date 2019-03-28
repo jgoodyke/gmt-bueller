@@ -1,0 +1,38 @@
+{
+  "default": {
+    "mysql": {
+      "config_id": "mysql",
+      "host": "gmtbueller.cupxrzy68xyo.us-east-2.rds.amazonaws.com",
+      "port": 3306,
+      "database": "default"
+    },
+    "mssql": {
+      "config_id": "mssql",
+      "host": "gmt-bueller.cupxrzy68xyo.us-east-2.rds.amazonaws.com",
+      "port": 1433,
+      "database": "default"
+    },
+    "redshift": {
+      "config_id": "redshift",
+      "host": "gmt-bueller-redshift-cluster.cmudmjtk61w7.us-east-2.redshift.amazonaws.com",
+      "port": 5439,
+      "database": "default"
+    }
+  },
+  "development": {
+    "mysql": { },
+    "mssql": { },
+    "redshift": { }
+  },
+  "production": {
+    "mysql": {
+      "database": "default-prod"
+    },
+    "mssql": {
+      "database": "default-prod"
+    },
+    "redshift": {
+      "database": "default-prod"
+    }
+  }
+}

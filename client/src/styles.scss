@@ -1,0 +1,36 @@
+.height-full {
+  height: 100%;
+}
+.body-login {
+  text-align: center !important;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #333;
+}
+app-root {
+  width: 100%;
+}
+.navbar .navbar-brand > img {
+  height: 40px;
+  width: auto;
+}
+.container.main {
+  padding-top: 25px;
+}
+
+.fs-12 {
+  font-size: 12px;
+}
+.fs-14 {
+  font-size: 14px;
+}
+.fc-green {
+  color: #569a45;
+}
+.fc-red {
+  color: #c73e2e;
+}

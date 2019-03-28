@@ -1,0 +1,26 @@
+<!-- nav -->
+<nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="user">
+  <a class="navbar-brand" routerLink="/">
+    <img src="../../assets/img/fbdo-2-small-transparent.png" alt="">
+  </a>  
+  <div class="navbar-nav">
+    <a class="nav-item nav-link" routerLink="/dashboard" routerLinkActive="active">Outline</a>
+    <!-- <a class="nav-item nav-link" routerLink="/data" routerLinkActive="active">Data</a> -->
+    <a class="nav-item nav-link" routerLink="/reports" routerLinkActive="active">Reports</a>
+  </div>
+  <div class="navbar-nav ml-auto">
+      <div class="nav-item">
+          <a class="nav-item nav-link" (click)="logout()">Logout</a>
+      </div>
+    </div>
+</nav>
+
+<!-- main -->
+<div class="container main">
+  <div class="row">
+    <div class="col">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+

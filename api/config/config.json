@@ -1,0 +1,30 @@
+{
+  "default": {
+    "app_name": "Bueller",
+    "app_desc": "REST services for student outcome problem",
+    "node_port": 3000,
+    "db_host": "localhost",
+    "db_port": 27017,
+    "db_user": "",
+    "db_pass": "",
+    "db_name": "gmt-bueller"
+  },
+  "development": {
+    "config_id": "development"
+  },
+  "testing": {
+    "config_id": "testing",
+    "db_name": "gmt-bueller-test"
+  },
+  "staging": {
+    "config_id": "staging",
+    "node_port": 3001,
+    "db_host": "mongo",
+    "db_name": "gmt-bueller-stag"
+  },
+  "production": {
+    "config_id": "production",
+    "node_port": 3001,
+    "db_host": "mongo"
+  }
+}

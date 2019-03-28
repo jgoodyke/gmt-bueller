@@ -1,0 +1,358 @@
+<h1 class="bd-title" id="content">Reports</h1>
+<p class="bd-lead">
+  The following reports provide insight into the effects of a student's circumstance, health, and lifestyle choices on their grades.  
+  <span *ngIf="reportStatsLoaded">
+    This data is representing a sample of <strong>{{reportStats?.studentCount}}</strong> {{(reportStats?.studentCount === 1) ? 'student' : 'students'}} 
+    {{(reportStats?.schoolStats.length === 1) ? 'from' : 'spanning across'}} <strong>{{reportStats?.schoolStats.length}}</strong> secondary {{(reportStats?.schoolStats.length === 1) ? 'school' : 'schools'}}.</span>
+</p>
+<br>
+
+<h2 id="inline-code">10,000 Foot</h2>
+<p class="bd-lead">This is a quick look at the overall student population and schools to give a general sense of the data included in this report.  As you scroll down you will see more detailed information.</p>
+<br>
+
+
+<div class="container-fluid mt-3 px-0">
+  <div class="row pb-3">
+    <div class="col">
+        <h4 id="inline-code">Full Population</h4>
+    </div>
+    <div class="col text-right">
+        <div *ngIf="!reportStatsLoaded" class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <table class="table">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col" colspan="3">Population</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Student Sample</th>
+            <td colspan="2" class="text-right">{{(reportStats?.studentCount) ? reportStats?.studentCount : '-'}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Age Range</th>
+            <td colspan="2" class="text-right">{{(reportStats?.minAge && reportStats?.maxAge) ? reportStats?.minAge + ' - ' + reportStats?.maxAge : '-'}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Male</th>
+            <td class="text-right">{{(reportStats?.malePercent) ? reportStats?.malePercent + '%' : ''}}</td>
+            <td class="text-right">{{(reportStats?.maleCount) ? reportStats?.maleCount : '-'}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Female</th>
+            <td class="text-right">{{(reportStats?.femalePercent) ? reportStats?.femalePercent + '%' : ''}}</td>
+            <td class="text-right">{{(reportStats?.femaleCount) ? reportStats?.femaleCount : '-'}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Avg Final Grade</th>
+            <td colspan="2" class="text-right">{{(reportStats?.g3Avg) ? reportStats?.g3Avg : '-'}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-sm-6">
+      <canvas id="chartPopSchools">{{chartPopSchools}}</canvas>
+      <!-- <canvas baseChart [data]="chartPopSchools.data" [labels]="chartPopSchools.labels" [chartType]="chartPopSchools.type" [options]="chartPopSchools.options" [legend]="chartPopSchools.legend"></canvas> -->
+    </div>
+  </div>
+</div>
+
+<br>
+<div class="container-fluid mt-3 px-0">
+  <div class="row pb-3">
+    <div class="col">
+        <h4 id="inline-code">Secondary Schools ({{(reportStats?.schoolStats) ? reportStats?.schoolStats.length : '-'}})</h4>
+    </div>
+    <div class="col text-right">
+        <div *ngIf="!reportStatsLoaded" class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6" *ngFor="let school of reportStats?.schoolStats">
+      <table class="table">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col" colspan="3">{{school.name}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Student Sample</th>
+            <td class="text-right" colspan="2">{{school.studentCount}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Age Range</th>
+            <td class="text-right" colspan="2">{{school.minAge + ' - ' + school.maxAge}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Male</th>
+            <td class="text-right">{{school.malePercent}}%</td>
+            <td class="text-right">{{school.maleCount}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Female</th>
+            <td class="text-right">{{school.femalePercent}}%</td>
+            <td class="text-right">{{school.femaleCount}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Avg Final Grade</th>
+            <td class="text-right" colspan="2">{{school.g3Avg}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<br><br>
+<hr/>
+<br><br>
+
+<h2 id="inline-code">Connecting the dots</h2>
+<p class="bd-lead">
+  The radar chart below helps to shows the correlation of the average final grade with respect to specific binary data, such as whether the student comes from a large family,
+  or if their parents still live together, etc.
+  <br>
+  For example, we can see the relationship of the average final grade for all students
+  that had internet access vs those that did not.  Based on this data we can see that those students with access to the internet performed 0.2 points better on average than
+  than those that did not.<br>
+  <br>
+  You can also use this data to see how other fields may relate to each other with regards to outcome. For example, if you are single and come from a small family...you are pretty smart.
+</p>
+
+<div class="container-fluid mt-5 px-0">
+  <div class="row">
+    <div class="col-sm-6">
+      <canvas class="mb-4" id="chartCorrelationBinary" width="250%" height="250%">{{chartCorrelationBinary}}</canvas>
+    </div>
+    <div class="col-sm-6">
+      <h6>Avg Grade by Student Situation</h6>
+      <table class="table fs-14">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">Situation</th>
+            <th scope="col">Yes</th>
+            <th scope="col">No</th>
+            <th scope="col">Difference</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let stat of reportStats?.binaryStats">
+            <td scope="row">{{stat.label}}</td>
+            <td [class.fc-green]="stat.yes > stat.no" [class.fc-red]="stat.no > stat.yes" class="text-right">{{stat.yes}}</td>
+            <td [class.fc-green]="stat.no > stat.yes" [class.fc-red]="stat.yes > stat.no" class="text-right">{{stat.no}}</td>
+            <td class="text-right">{{stat.absDiff}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="contianer-fluid mt-5 px-0">
+  <div class="row pb-3">
+    <div class="col">
+      <h4 id="inline-code">1-on-1 comparisons...looking for patterns, or the lack of</h4>
+      <p class="bd-lead">
+        Below you can select two different fields and run a comparison to look for relatable patterns. The scatter chart 
+        can be used to look for a linear relationship, or sometimes just as important, no relationship at all.
+      </p>
+    </div>
+  </div>
+  <div class="row pt-3">
+    <div class="col-sm-5">
+      <select class="form-control" id="correlationField1" (change)="onChangeCorrelationField('field1', $event.target)">
+        <option value="">Select field 1...</option>
+        <optgroup label="Numeric Data">
+          <option dataType="numeric" value="medu">Mother's education</option>
+          <option dataType="numeric" value="fedu">Father's education</option>
+          <option dataType="numeric" value="traveltime">Home to school travel time</option>
+          <option dataType="numeric" value="studytime">Weekly study time</option>
+          <option dataType="numeric" value="failures">Number of past class failures</option>
+          <option dataType="numeric" value="famrel">Quality of family relationship</option>
+          <option dataType="numeric" value="freetime">Free time after school</option>
+          <option dataType="numeric" value="goout">Going out with friends</option>
+          <option dataType="numeric" value="dalc">Worday alcohol consumption</option>
+          <option dataType="numeric" value="walc">Weekend alcohol consumption</option>
+          <option dataType="numeric" value="health">Current health status</option>
+          <option dataType="numeric" value="absences">Number of school absences</option>
+          <option dataType="numeric" value="G3">Final Grade</option>
+        </optgroup>
+        <!-- <optgroup label="Binary Data">
+          <option dataType="binary" value="famsize">Family size</option>
+          <option dataType="binary" value="pstatus">Parent's cohabitation status</option>
+          <option dataType="binary" value="schoolsup">Extra educational support</option>
+          <option dataType="binary" value="famsup">Family educational support</option>
+          <option dataType="binary" value="paid">Extra paid classes</option>
+          <option dataType="binary" value="activities">Extra-curricular activites</option>
+          <option dataType="binary" value="internet">Internet access at home</option>
+          <option dataType="binary" value="romantic">In a romantic relationship</option>
+        </optgroup>
+        <optgroup label="Nominal Data">
+          <option dataType="nominal" value="mjob">Mother's job</option>
+          <option dataType="nominal" value="fjob">Father's job</option>
+          <option dataType="nominal" value="guardian">Student's guardian</option>
+        </optgroup> -->
+      </select>
+    </div>
+    <div class="col-sm-5">
+      <select class="form-control" id="correlationField2" (change)="onChangeCorrelationField('field2', $event.target)">
+        <option value="">Select field 2...</option>
+        <optgroup label="Numeric Data">
+          <option dataType="numeric" value="medu">Mother's education</option>
+          <option dataType="numeric" value="fedu">Father's education</option>
+          <option dataType="numeric" value="traveltime">Home to school travel time</option>
+          <option dataType="numeric" value="studytime">Weekly study time</option>
+          <option dataType="numeric" value="failures">Number of past class failures</option>
+          <option dataType="numeric" value="famrel">Quality of family relationship</option>
+          <option dataType="numeric" value="freetime">Free time after school</option>
+          <option dataType="numeric" value="goout">Going out with friends</option>
+          <option dataType="numeric" value="dalc">Worday alcohol consumption</option>
+          <option dataType="numeric" value="walc">Weekend alcohol consumption</option>
+          <option dataType="numeric" value="health">Current health status</option>
+          <option dataType="numeric" value="absences">Number of school absences</option>
+          <option dataType="numeric" value="g3">Final Grade</option>
+        </optgroup>
+        <!-- <optgroup label="Binary Data">
+          <option dataType="binary" value="famsize">Family size</option>
+          <option dataType="binary" value="pstatus">Parent's cohabitation status</option>
+          <option dataType="binary" value="schoolsup">Extra educational support</option>
+          <option dataType="binary" value="famsup">Family educational support</option>
+          <option dataType="binary" value="paid">Extra paid classes</option>
+          <option dataType="binary" value="activities">Extra-curricular activites</option>
+          <option dataType="binary" value="internet">Internet access at home</option>
+          <option dataType="binary" value="romantic">In a romantic relationship</option>
+        </optgroup>
+        <optgroup label="Nominal Data">
+          <option dataType="nominal" value="mjob">Mother's job</option>
+          <option dataType="nominal" value="fjob">Father's job</option>
+          <option dataType="nominal" value="guardian">Student's guardian</option>
+        </optgroup> -->
+      </select>
+    </div>
+    <div class="col-sm-2">
+      <button type="button" class="btn btn-primary mb-2" (click)="loadCorrelationChart()">Run Comparison</button>
+    </div>
+    <div class="row text-center" [hidden]="!correlationField1.length || !correlationField2.length">
+      <canvas style="height: 400px;" id="chartCorrelation">{{chartCorrelation}}</canvas>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="contianer-fluid mt-5 px-0">
+  <div class="row pb-3">
+    <div class="col-sm-6">
+      <div class="row">
+        <div class="col">
+          <h4 id="inline-code">Does travel effect grades?</h4>
+        </div>
+        <div class="col">
+          <canvas style="height:400px;" id="chartPopTravel">{{chartPopTravel}}</canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="row">
+        <div class="col">
+          <h4 id="inline-code">Does health effect grades?</h4>
+        </div>
+        <div class="col">
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<!-- <div class="contianer-fluid mt-5 px-0">
+  <div class="row pb-3">
+    <div class="col">
+      <h4 id="inline-code">How Health effects grades</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+    </div>
+  </div>
+  <div class="row pt-4">
+    <div class="col-sm-6">
+      <canvas style="height:400px;" id="chartPopHealth1">{{chartPopHealth1}}</canvas>
+    </div>
+    <div class="col-sm-6">
+      <canvas style="height:400px;" id="chartPopHealth2">{{chartPopHealth2}}</canvas>
+    </div>
+  </div>
+</div> -->
+
+
+<div class="contianer-fluid mt-5 px-0">
+  <div class="row pb-3">
+    <div class="col">
+      <h4 id="inline-code">How grades were directly effected by...</h4>
+      <p class="bd-lead">
+        Choose a factor from the list provided below to see how that factor effected the final grade of the students (shown as average).
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <h6 id="inline-code">Show me how grades were effected by:</h6>
+      <select class="form-control" name="customView" (change)="onChangeCustomView($event.target.value)">
+        <option value="">Select view...</option>
+        <option value="internet">Internet access (having, not having)</option>
+        <option value="failures">Number of past class failures</option>
+        <option value="studytime">Study time (hours per week)</option>
+        <option value="absences">Absences</option>
+        <option value="traveltime" selected>Home to school travel time</option>
+        <option value="health">Current health status</option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col text-center pt-4">
+      <div *ngIf="chartPopCustomLoading" class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-4">
+    <div class="col-sm-6">
+      <canvas style="height:400px;" id="chartPopCustom">{{chartPopCustom}}</canvas>
+    </div>
+    <div class="col-sm-6" *ngIf="chartPopCustomReport?.data.length">
+      <h6 class="text-center">{{chartPopCustomTitle}}</h6>
+      <table class="table fs-14">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">Factor</th>
+            <th scope="col">Sample</th>
+            <th scope="col">Percent</th>
+            <th scope="col">Avg Grade</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let stat of chartPopCustomReport?.data">
+            <td scope="row">{{stat.label}}</td>
+            <td class="text-right">{{stat.subSampleSize}}</td>
+            <td class="text-right">{{stat.samplePercent}}%</td>
+            <td class="text-right">{{stat.avgGrade}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<br><br><br><br><br><br><br><br><br><br><br><br>
+
+  
